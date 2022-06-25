@@ -82,6 +82,6 @@ type Cancellation struct {
 		ReservationPossible      bool        `json:"reservation_possible"`
 		Reserved                 bool        `json:"reserved"`
 		CancellationDate         interface{} `json:"cancellation_date"`
-		CancellationReason       []string    `json:"cancellation_reason"`
+		CancellationReason       interface{} `json:"cancellation_reason"`
 	} `json:"cancellation"`
 }

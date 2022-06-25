@@ -133,11 +133,42 @@ func (c *Client) Do(r *http.Request, v interface{}) (*Response, error) {
 		return response, nil
 	}
 
-	/*if resp.StatusCode >= 400 && resp.StatusCode <= 599 {
+	if resp.StatusCode == 400 {
+
+		fmt.Println("Invalid Input error")
+
+		return response, err
+	}
+
+	if resp.StatusCode == 404 {
+
+	}
+
+	if resp.StatusCode >= 400 && resp.StatusCode <= 599 {
+		switch resp.StatusCode {
+		case 400:
+			err = fmt.Errorf("invalid input error")
+			return response, err
+		case 401:
+			err = fmt.Errorf("401 unauthorized error")
+			return response, err
+		case 403:
+			err = fmt.Errorf("403 Forbidden")
+			return response, err
+		case 404:
+			err = fmt.Errorf("404 Not found")
+			return response, err
+		case 503:
+			err = fmt.Errorf("503 - Service Unavailable")
+			return response, err
+		default:
+			err = fmt.Errorf("hcrobot: server responded with status code %d", resp.StatusCode)
+			return response, err
+
+		}
+		/* TODO Proper ResponseCode Parsing
 		//err = errorFromResponse(resp, body)
-		fmt.Println("hii!")
 		if err == nil {
-			fmt.Println("hallo")
 			err = fmt.Errorf("hcrobot: server responded with status code %d", resp.StatusCode)
 			return response, err
 		}
@@ -147,14 +178,12 @@ func (c *Client) Do(r *http.Request, v interface{}) (*Response, error) {
 		//		continue
 		//	}
 		return response, err
+		*/
 	}
-	*/
-	//fmt.Println(resp.StatusCode)
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err := json.Unmarshal(body, &v); err != nil { // Parse []byte to the go struct pointer
 		fmt.Println(io.Copy(os.Stdout, bytes.NewReader(body)))
-		fmt.Println("BLAAAA!")
 		return response, err
 	}
 
@@ -177,6 +206,8 @@ func PrettyPrint(i interface{}) string {
 	s, _ := json.MarshalIndent(i, "", "\t")
 	return string(s)
 }
+
+//func errorFromResponse(s schema.Error) Error {}
 
 // https://github.com/google/go-github/commit/994f6f8405f052a117d2d0b500054341048fbb08
 func addOptions(s string, opt interface{}) (string, error) {

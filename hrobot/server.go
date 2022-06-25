@@ -65,7 +65,7 @@ type Cancellation struct {
 	ReservationPossible      bool
 	Reserved                 bool
 	CancellationDate         interface{}
-	CancellationReason       []string
+	CancellationReason       interface{}
 }
 
 type ServerClient struct {

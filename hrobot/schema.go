@@ -357,3 +357,27 @@ func VSwitchSingleFromSchema(s schema.VSwitchSingle) *VSwitchSingle {
 	}
 	return vswitch
 }
+
+// ErrorFromSchema converts a schema.Error to an Error.
+/*
+func ErrorFromSchema(s schema.Error) Error {
+	e := Error{
+		Code:    ErrorCode(s.Code),
+		Message: s.Message,
+	}
+
+	if d, ok := s.Details.(schema.ErrorDetailsInvalidInput); ok {
+		details := ErrorDetailsInvalidInput{
+			Fields: []ErrorDetailsInvalidInputField{},
+		}
+		for _, field := range d.Fields {
+			details.Fields = append(details.Fields, ErrorDetailsInvalidInputField{
+				Name:     field.Name,
+				Messages: field.Messages,
+			})
+		}
+		e.Details = details
+	}
+	return e
+}
+*/
