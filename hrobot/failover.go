@@ -60,7 +60,7 @@ func (c *FailoverClient) GetFailoverIP(ctx context.Context, ip string) (*Failove
 
 // switches failover routing to given IP
 func (c *FailoverClient) SwitchFailover(ctx context.Context, active_server_ip string) (*Failover, *Response, error) {
-	req, err := c.client.NewRequest(ctx, "POST", fmt.Sprintf("/ip/%s", active_server_ip), nil)
+	req, err := c.client.NewRequest(ctx, "POST", fmt.Sprintf("/failover/%s", active_server_ip), nil)
 
 	if err != nil {
 		return nil, nil, err
@@ -77,7 +77,7 @@ func (c *FailoverClient) SwitchFailover(ctx context.Context, active_server_ip st
 
 // deletes the routing of a given IP
 func (c *FailoverClient) DeleteFailover(ctx context.Context, failover_ip string) (*Failover, *Response, error) {
-	req, err := c.client.NewRequest(ctx, "DELETE", fmt.Sprintf("/ip/%s/mac", failover_ip), nil)
+	req, err := c.client.NewRequest(ctx, "DELETE", fmt.Sprintf("/failover/%s/", failover_ip), nil)
 
 	if err != nil {
 		return nil, nil, err
