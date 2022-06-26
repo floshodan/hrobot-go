@@ -133,17 +133,6 @@ func (c *Client) Do(r *http.Request, v interface{}) (*Response, error) {
 		return response, nil
 	}
 
-	if resp.StatusCode == 400 {
-
-		fmt.Println("Invalid Input error")
-
-		return response, err
-	}
-
-	if resp.StatusCode == 404 {
-
-	}
-
 	if resp.StatusCode >= 400 && resp.StatusCode <= 599 {
 		switch resp.StatusCode {
 		case 400:

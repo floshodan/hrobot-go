@@ -234,12 +234,42 @@ func IPFromSchema(s schema.IP) *IP {
 	return ip
 }
 
+func IPSingleFromSchema(s schema.IPSingle) *IPSingle {
+	ip := &IPSingle{
+		IP:              s.IP.IP,
+		Gateway:         s.IP.Gateway,
+		Mask:            s.IP.Mask,
+		Broadcast:       s.IP.Broadcast,
+		ServerIP:        s.IP.ServerIP,
+		ServerNumber:    s.IP.ServerNumber,
+		Locked:          s.IP.Locked,
+		SeparateMac:     s.IP.SeparateMac,
+		TrafficWarnings: s.IP.TrafficWarnings,
+		TrafficHourly:   s.IP.TrafficHourly,
+		TrafficDaily:    s.IP.TrafficDaily,
+		TrafficMonthly:  s.IP.TrafficMonthly,
+	}
+	return ip
+}
+
 func MACFromSchema(s schema.MAC) *MAC {
 	mac := &MAC{
 		IP:  s.Mac.IP,
 		MAC: s.Mac.Mac,
 	}
 	return mac
+}
+
+func IPCancellationFromSchema(s schema.IPCancellation) *IPCancellation {
+	ipcancel := &IPCancellation{
+		IP:                       s.Cancellation.IP,
+		ServerNumber:             s.Cancellation.ServerNumber,
+		EarliestCancellationDate: s.Cancellation.EarliestCancellationDate,
+		Cancelled:                s.Cancellation.Cancelled,
+		CancellationDate:         s.Cancellation.CancellationDate,
+	}
+	return ipcancel
+
 }
 
 func SubnetFromSchema(s schema.Subnet) *Subnet {

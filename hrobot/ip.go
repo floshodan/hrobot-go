@@ -3,6 +3,7 @@ package hrobot
 import (
 	"context"
 	"fmt"
+	"net/url"
 
 	"github.com/floshodan/hrobot-go/hrobot/schema"
 	"github.com/google/go-querystring/query"
@@ -24,9 +25,32 @@ type IP struct {
 	TrafficMonthly  int
 }
 
+type IPSingle struct {
+	IP              string
+	Gateway         string
+	Mask            int
+	Broadcast       string
+	ServerIP        string
+	ServerNumber    int
+	Locked          bool
+	SeparateMac     interface{}
+	TrafficWarnings bool
+	TrafficHourly   int
+	TrafficDaily    int
+	TrafficMonthly  int
+}
+
 type MAC struct {
 	IP  string
 	MAC string
+}
+
+type IPCancellation struct {
+	IP                       string
+	ServerNumber             int
+	EarliestCancellationDate string
+	Cancelled                bool
+	CancellationDate         interface{}
 }
 
 func (c *IPClient) List(ctx context.Context) ([]*IP, *Response, error) {
@@ -55,23 +79,24 @@ func (c *IPClient) List(ctx context.Context) ([]*IP, *Response, error) {
 
 }
 
-func (c *IPClient) GetIPByIP(ctx context.Context, ip string) (*IP, *Response, error) {
+func (c *IPClient) GetIPByIP(ctx context.Context, ip string) (*IPSingle, *Response, error) {
 	req, err := c.client.NewRequest(ctx, "GET", fmt.Sprintf("/ip/%s", ip), nil)
 
 	if err != nil {
 		return nil, nil, err
 	}
 
-	var body schema.IP
+	var body schema.IPSingle
 	resp, err := c.client.Do(req, &body)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	return IPFromSchema(body), resp, nil
+	return IPSingleFromSchema(body), resp, nil
 }
 
-func (c *IPClient) UpdateTrafficByIP(ctx context.Context, ip string, opt *IPOps) (*IP, *Response, error) {
+// updates Traffic Warning by IP Adress
+func (c *IPClient) UpdateTrafficByIP(ctx context.Context, ip string, opt *IPOps) (*IPSingle, *Response, error) {
 	params, _ := query.Values(opt)
 	req, err := c.client.NewRequest(ctx, "POST", fmt.Sprintf("/ip/%s", ip), params)
 
@@ -79,13 +104,13 @@ func (c *IPClient) UpdateTrafficByIP(ctx context.Context, ip string, opt *IPOps)
 		return nil, nil, err
 	}
 
-	var body schema.IP
+	var body schema.IPSingle
 	resp, err := c.client.Do(req, &body)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	return IPFromSchema(body), resp, nil
+	return IPSingleFromSchema(body), resp, nil
 }
 
 func (c *IPClient) GetMACByIP(ctx context.Context, ip string) (*MAC, *Response, error) {
@@ -136,6 +161,57 @@ func (c *IPClient) DeleteMAC(ctx context.Context, ip string) (*MAC, *Response, e
 
 	return MACFromSchema(body), resp, nil
 
+}
+
+func (c *IPClient) GetCancellation(ctx context.Context, ip string) (*IPCancellation, *Response, error) {
+	req, err := c.client.NewRequest(ctx, "GET", fmt.Sprintf("/ip/%s/cancellation", ip), nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var body schema.IPCancellation
+	resp, err := c.client.Do(req, &body)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return IPCancellationFromSchema(body), resp, nil
+}
+
+func (c *IPClient) PostCancellation(ctx context.Context, ip string, cancellation_date string) (*IPCancellation, *Response, error) {
+	data := url.Values{}
+	data.Set("cancellation_date", cancellation_date)
+
+	req, err := c.client.NewRequest(ctx, "POST", fmt.Sprintf("/ip/%s/cancellation", ip), data)
+
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var body schema.IPCancellation
+	resp, err := c.client.Do(req, &body)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return IPCancellationFromSchema(body), resp, nil
+}
+
+func (c *IPClient) DeleteCancellation(ctx context.Context, ip string) (*IPCancellation, *Response, error) {
+	req, err := c.client.NewRequest(ctx, "DELETE", fmt.Sprintf("/ip/%s/cancellation", ip), nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var body schema.IPCancellation
+	resp, err := c.client.Do(req, &body)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return IPCancellationFromSchema(body), resp, nil
 }
 
 type IPOps struct {
