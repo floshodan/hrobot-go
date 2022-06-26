@@ -322,6 +322,17 @@ func ResetFromSchema(s schema.Reset) *Reset {
 	return reset
 }
 
+func FailoverFromSchema(s schema.Failover) *Failover {
+	failover := &Failover{
+		IP:             s.Failover.IP,
+		Netmask:        s.Failover.Netmask,
+		ServerIP:       s.Failover.ServerIP,
+		ServerNumber:   s.Failover.ServerNumber,
+		ActiveServerIP: s.Failover.ActiveServerIP,
+	}
+	return failover
+}
+
 func WOLFromSchema(s schema.WOL) *WOL {
 	wol := &WOL{
 		ServerIP:      s.Wol.ServerIP,

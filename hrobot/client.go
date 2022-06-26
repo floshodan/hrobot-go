@@ -39,6 +39,7 @@ type Client struct {
 	WakeOnLane WOLClient
 	Firewall   FirewallClient
 	VSwitch    VSwitchClient
+	Failover   FailoverClient
 }
 
 type ClientOption func(*Client)
@@ -88,6 +89,7 @@ func NewClient(options ...ClientOption) *Client {
 	client.WakeOnLane = WOLClient{client: client}
 	client.Firewall = FirewallClient{client: client}
 	client.VSwitch = VSwitchClient{client: client}
+	client.Failover = FailoverClient{client: client}
 
 	return client
 }
