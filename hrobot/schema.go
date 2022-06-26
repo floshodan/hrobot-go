@@ -289,6 +289,28 @@ func SubnetFromSchema(s schema.Subnet) *Subnet {
 	return subnet
 }
 
+func SubnetMacFromSchema(s schema.SubnetMac) *SubnetMac {
+	mac := &SubnetMac{
+		IP:          s.Mac.IP,
+		Mask:        s.Mac.Mask,
+		Mac:         s.Mac.Mac,
+		PossibleMac: s.Mac.PossibleMac,
+	}
+	return mac
+}
+
+func SubnetCancellationFromSchema(s schema.SubnetCancellation) *SubnetCancellation {
+	cancellation := &SubnetCancellation{
+		IP:                       s.Cancellation.IP,
+		Mask:                     s.Cancellation.Mask,
+		ServerNumber:             s.Cancellation.ServerNumber,
+		EarliestCancellationDate: s.Cancellation.EarliestCancellationDate,
+		Cancelled:                s.Cancellation.Cancelled,
+		CancellationDate:         s.Cancellation.CancellationDate,
+	}
+	return cancellation
+}
+
 func ResetFromSchema(s schema.Reset) *Reset {
 	reset := &Reset{
 		ServerIP:        s.Reset.ServerIP,

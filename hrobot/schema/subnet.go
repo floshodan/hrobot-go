@@ -31,3 +31,24 @@ type Subnet struct {
 		TrafficMonthly  int    `json:"traffic_monthly"`
 	} `json:"subnet"`
 }
+
+type SubnetMac struct {
+	Mac struct {
+		IP          string `json:"ip"`
+		Mask        int    `json:"mask"`
+		Mac         string `json:"mac"`
+		PossibleMac interface {
+		} `json:"possible_mac"`
+	} `json:"mac"`
+}
+
+type SubnetCancellation struct {
+	Cancellation struct {
+		IP                       string      `json:"ip"`
+		Mask                     int         `json:"mask"`
+		ServerNumber             int         `json:"server_number"`
+		EarliestCancellationDate string      `json:"earliest_cancellation_date"`
+		Cancelled                bool        `json:"cancelled"`
+		CancellationDate         interface{} `json:"cancellation-date"`
+	} `json:"cancellation"`
+}
