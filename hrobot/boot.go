@@ -12,6 +12,24 @@ type BootClient struct {
 	client *Client
 }
 
+type BootList struct {
+	ServerIP      string
+	ServerIpv6Net string
+	ServerNumber  int
+	Os            interface{}
+	Arch          interface{}
+	Active        bool
+	Password      interface{}
+	AuthorizedKey []interface{}
+	HostKey       []interface{}
+	BootTime      interface{}
+	Linux         interface{}
+	Vnc           interface{}
+	Windows       interface{}
+	Plesk         interface{}
+	Cpanel        interface{}
+}
+
 type BootLinux struct {
 	ServerIP      string
 	ServerIpv6Net string
@@ -29,12 +47,13 @@ type BootRescue struct {
 	ServerIP      string
 	ServerIpv6Net string
 	ServerNumber  int
-	Os            string
-	Arch          int
+	Os            interface{}
+	Arch          interface{}
 	Active        bool
-	Password      string
+	Password      interface{}
 	AuthorizedKey []interface{}
 	HostKey       []interface{}
+	BootTime      interface{}
 }
 
 type Boot struct {
@@ -42,14 +61,30 @@ type Boot struct {
 	BootLinux
 }
 
-func (c *BootClient) GetBootList(ctx context.Context, servernumber string) (*BootRescue, *Response, error) {
+func (c *BootClient) GetBootOptions(ctx context.Context, servernumber string) (*BootList, *Response, error) {
 	req, err := c.client.NewRequest(ctx, "GET", fmt.Sprintf("/boot/%s", servernumber), nil)
 
 	if err != nil {
 		return nil, nil, err
 	}
 
-	var body schema.BootRescue
+	var body schema.BootList
+	resp, err := c.client.Do(req, &body)
+	if err != nil {
+		return nil, nil, err
+	}
+	return BootListFromSchema(body), resp, nil
+}
+
+// query boot options for the Rescue System
+func (c *BootClient) GetRescue(ctx context.Context, servernumber string) (*BootRescue, *Response, error) {
+	req, err := c.client.NewRequest(ctx, "GET", fmt.Sprintf("/boot/%s/rescue", servernumber), nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var body schema.RescueList
 	resp, err := c.client.Do(req, &body)
 	if err != nil {
 		return nil, nil, err
@@ -60,14 +95,29 @@ func (c *BootClient) GetBootList(ctx context.Context, servernumber string) (*Boo
 
 func (c *BootClient) ActivateRescue(ctx context.Context, servernumber string, opt *RescueOpts) (*BootRescue, *Response, error) {
 	params, _ := query.Values(opt)
-	fmt.Println(params)
 	req, err := c.client.NewRequest(ctx, "POST", fmt.Sprintf("/boot/%s/rescue", servernumber), params)
 
 	if err != nil {
 		return nil, nil, err
 	}
 
-	var body schema.BootRescue
+	var body schema.RescueList
+	resp, err := c.client.Do(req, &body)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return RescueFromSchema(body), resp, nil
+}
+
+func (c *BootClient) DeactivateRescue(ctx context.Context, servernumber string) (*BootRescue, *Response, error) {
+	req, err := c.client.NewRequest(ctx, "DELETE", fmt.Sprintf("/boot/%s/rescue", servernumber), nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var body schema.RescueList
 	resp, err := c.client.Do(req, &body)
 	if err != nil {
 		return nil, nil, err

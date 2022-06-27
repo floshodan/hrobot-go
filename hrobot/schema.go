@@ -204,21 +204,6 @@ func CancellationFromSchema(s schema.Cancellation) *Cancellation {
 	return cancellation
 }
 
-func RescueFromSchema(s schema.BootRescue) *BootRescue {
-	rescue := &BootRescue{
-		ServerIP:      s.Rescue.ServerIP,
-		ServerIpv6Net: s.Rescue.ServerIpv6Net,
-		ServerNumber:  s.Rescue.ServerNumber,
-		Os:            s.Rescue.Os,
-		Arch:          s.Rescue.Arch,
-		Active:        s.Rescue.Active,
-		Password:      s.Rescue.Password,
-		AuthorizedKey: s.Rescue.AuthorizedKey,
-		HostKey:       s.Rescue.HostKey,
-	}
-	return rescue
-}
-
 func IPFromSchema(s schema.IP) *IP {
 	ip := &IP{
 		IP:              s.IP.IP,
@@ -340,6 +325,43 @@ func WOLFromSchema(s schema.WOL) *WOL {
 		ServerNumber:  s.Wol.ServerNumber,
 	}
 	return wol
+}
+
+func BootListFromSchema(s schema.BootList) *BootList {
+	boot := &BootList{
+		ServerIP:      s.Boot.ServerIP,
+		ServerIpv6Net: s.Boot.ServerIpv6Net,
+		ServerNumber:  s.Boot.ServerNumber,
+		Os:            s.Boot.Os,
+		Arch:          s.Boot.Arch,
+		Active:        s.Boot.Active,
+		Password:      s.Boot.Password,
+		AuthorizedKey: s.Boot.AuthorizedKey,
+		HostKey:       s.Boot.HostKey,
+		BootTime:      s.Boot.BootTime,
+		Linux:         s.Boot.Linux,
+		Vnc:           s.Boot.Vnc,
+		Windows:       s.Boot.Windows,
+		Plesk:         s.Boot.Plesk,
+		Cpanel:        s.Boot.Cpanel,
+	}
+	return boot
+}
+
+func RescueFromSchema(s schema.RescueList) *BootRescue {
+	rescue := &BootRescue{
+		ServerIP:      s.Rescue.ServerIP,
+		ServerIpv6Net: s.Rescue.ServerIpv6Net,
+		ServerNumber:  s.Rescue.ServerNumber,
+		Os:            s.Rescue.Os,
+		Arch:          s.Rescue.Arch,
+		Active:        s.Rescue.Active,
+		Password:      s.Rescue.Password,
+		AuthorizedKey: s.Rescue.AuthorizedKey,
+		HostKey:       s.Rescue.HostKey,
+		BootTime:      s.Rescue.BootTime,
+	}
+	return rescue
 }
 
 func FirewallFromSchema(s schema.Firewall) *Firewall {
