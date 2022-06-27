@@ -126,6 +126,23 @@ func (c *BootClient) DeactivateRescue(ctx context.Context, servernumber string) 
 	return RescueFromSchema(body), resp, nil
 }
 
+// Show data of last rescue activation
+func (c *BootClient) GetLastRescue(ctx context.Context, servernumber string) (*BootRescue, *Response, error) {
+	req, err := c.client.NewRequest(ctx, "GET", fmt.Sprintf("/boot/%s/rescue/last", servernumber), nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var body schema.RescueList
+	resp, err := c.client.Do(req, &body)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return RescueFromSchema(body), resp, nil
+}
+
 type RescueOpts struct {
 	OS             string `url:"os"` //required
 	Arch           string `url:"arch"`
