@@ -364,6 +364,49 @@ func RescueFromSchema(s schema.RescueList) *BootRescue {
 	return rescue
 }
 
+func LinuxFromSchema(s schema.LinuxList) *BootLinux {
+	linux := &BootLinux{
+		ServerIP:      s.Linux.ServerIP,
+		ServerIpv6Net: s.Linux.ServerIpv6Net,
+		ServerNumber:  s.Linux.ServerNumber,
+		Dist:          s.Linux.Dist,
+		Arch:          s.Linux.Arch,
+		Lang:          s.Linux.Lang,
+		Active:        s.Linux.Active,
+		Password:      s.Linux.Password,
+		AuthorizedKey: s.Linux.AuthorizedKey,
+		HostKey:       s.Linux.HostKey,
+	}
+	return linux
+}
+
+func VncFromSchema(s schema.VncList) *BootVnc {
+	vnc := &BootVnc{
+		ServerIP:      s.Vnc.ServerIP,
+		ServerIpv6Net: s.Vnc.ServerIpv6Net,
+		ServerNumber:  s.Vnc.ServerNumber,
+		Dist:          s.Vnc.Dist,
+		Arch:          s.Vnc.Arch,
+		Lang:          s.Vnc.Lang,
+		Active:        s.Vnc.Active,
+		Password:      s.Vnc.Password,
+	}
+	return vnc
+}
+
+func WindowsFromSchema(s schema.WindowsList) *BootWindows {
+	windows := &BootWindows{
+		ServerIP:      s.Windows.ServerIP,
+		ServerIpv6Net: s.Windows.ServerIpv6Net,
+		ServerNumber:  s.Windows.ServerNumber,
+		Dist:          s.Windows.Dist,
+		Lang:          s.Windows.Lang,
+		Active:        s.Windows.Active,
+		Password:      s.Windows.Password,
+	}
+	return windows
+}
+
 func FirewallFromSchema(s schema.Firewall) *Firewall {
 	firewall := &Firewall{
 		ServerIP:     s.Firewall.ServerIP,

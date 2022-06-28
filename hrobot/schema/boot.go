@@ -15,6 +15,18 @@ type RescueList struct {
 	Rescue `json:"rescue"`
 }
 
+type LinuxList struct {
+	Linux `json:"linux"`
+}
+
+type VncList struct {
+	Vnc `json:"vnc"`
+}
+
+type WindowsList struct {
+	Windows `json:"windows"`
+}
+
 type Rescue struct {
 	ServerIP      string        `json:"server_ip"`
 	ServerIpv6Net string        `json:"server_ipv6_net"`
@@ -36,18 +48,28 @@ type Linux struct {
 	Arch          []int         `json:"arch"`
 	Lang          []string      `json:"lang"`
 	Active        bool          `json:"active"`
-	Password      interface{}   `json:"password"`
+	Password      string        `json:"password"`
 	AuthorizedKey []interface{} `json:"authorized_key"`
 	HostKey       []interface{} `json:"host_key"`
 }
 
 type Vnc struct {
-	ServerIP      string      `json:"server_ip"`
-	ServerIpv6Net string      `json:"server_ipv6_net"`
-	ServerNumber  int         `json:"server_number"`
-	Dist          []string    `json:"dist"`
-	Arch          []int       `json:"arch"`
-	Lang          []string    `json:"lang"`
-	Active        bool        `json:"active"`
-	Password      interface{} `json:"password"`
+	ServerIP      string   `json:"server_ip"`
+	ServerIpv6Net string   `json:"server_ipv6_net"`
+	ServerNumber  int      `json:"server_number"`
+	Dist          []string `json:"dist"`
+	Arch          []int    `json:"arch"`
+	Lang          []string `json:"lang"`
+	Active        bool     `json:"active"`
+	Password      string   `json:"password"`
+}
+
+type Windows struct {
+	ServerIP      string   `json:"server_ip"`
+	ServerIpv6Net string   `json:"server_ipv6_net"`
+	ServerNumber  int      `json:"server_number"`
+	Dist          []string `json:"dist"`
+	Lang          []string `json:"lang"`
+	Active        bool     `json:"active"`
+	Password      string   `json:"password"`
 }
