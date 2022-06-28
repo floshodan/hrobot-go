@@ -40,6 +40,7 @@ type Client struct {
 	Firewall   FirewallClient
 	VSwitch    VSwitchClient
 	Failover   FailoverClient
+	RDNS       RDNSClient
 }
 
 type ClientOption func(*Client)
@@ -90,6 +91,7 @@ func NewClient(options ...ClientOption) *Client {
 	client.Firewall = FirewallClient{client: client}
 	client.VSwitch = VSwitchClient{client: client}
 	client.Failover = FailoverClient{client: client}
+	client.RDNS = RDNSClient{client: client}
 
 	return client
 }

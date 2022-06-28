@@ -407,6 +407,14 @@ func WindowsFromSchema(s schema.WindowsList) *BootWindows {
 	return windows
 }
 
+func RDNSFromSchema(s schema.RDNS) *RDNS {
+	rdns := &RDNS{
+		IP:  s.Rdns.IP,
+		PTR: s.Rdns.Ptr,
+	}
+	return rdns
+}
+
 func FirewallFromSchema(s schema.Firewall) *Firewall {
 	firewall := &Firewall{
 		ServerIP:     s.Firewall.ServerIP,
