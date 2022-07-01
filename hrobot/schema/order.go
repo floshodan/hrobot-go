@@ -58,15 +58,15 @@ type Server_market_product struct {
 
 type ServerProductList []struct {
 	Product struct {
-		ID          string   `json:"id"`
-		Name        string   `json:"name"`
-		Description []string `json:"description"`
-		Traffic     string   `json:"traffic"`
-		Dist        []string `json:"dist"`
-		Arch        []int    `json:"arch"`
-		Lang        []string `json:"lang"`
-		Location    []string `json:"location"`
-		Prices      []struct {
+		ID             string   `json:"id"`
+		Name           string   `json:"name"`
+		Description    []string `json:"description"`
+		Traffic        string   `json:"traffic"`
+		Dist           []string `json:"dist"`
+		DeprecatedArch []int    `json:"@deprecated arch"`
+		Lang           []string `json:"lang"`
+		Location       []string `json:"location"`
+		Prices         []struct {
 			Location string `json:"location"`
 			Price    struct {
 				Net   string `json:"net"`
@@ -77,20 +77,27 @@ type ServerProductList []struct {
 				Gross string `json:"gross"`
 			} `json:"price_setup"`
 		} `json:"prices"`
+		OrderableAddons []struct {
+			ID     string      `json:"id"`
+			Name   string      `json:"name"`
+			Min    int         `json:"min"`
+			Max    int         `json:"max"`
+			Prices interface{} `json:"prices"`
+		} `json:"orderable_addons"`
 	} `json:"product"`
 }
 
 type ServerProduct struct {
 	Product struct {
-		ID          string   `json:"id"`
-		Name        string   `json:"name"`
-		Description []string `json:"description"`
-		Traffic     string   `json:"traffic"`
-		Dist        []string `json:"dist"`
-		Arch        []int    `json:"arch"`
-		Lang        []string `json:"lang"`
-		Location    []string `json:"location"`
-		Prices      []struct {
+		ID             string   `json:"id"`
+		Name           string   `json:"name"`
+		Description    []string `json:"description"`
+		Traffic        string   `json:"traffic"`
+		Dist           []string `json:"dist"`
+		DeprecatedArch []int    `json:"@deprecated arch"`
+		Lang           []string `json:"lang"`
+		Location       []string `json:"location"`
+		Prices         []struct {
 			Location string `json:"location"`
 			Price    struct {
 				Net   string `json:"net"`
@@ -101,6 +108,13 @@ type ServerProduct struct {
 				Gross string `json:"gross"`
 			} `json:"price_setup"`
 		} `json:"prices"`
+		OrderableAddons []struct {
+			ID     string      `json:"id"`
+			Name   string      `json:"name"`
+			Min    int         `json:"min"`
+			Max    int         `json:"max"`
+			Prices interface{} `json:"prices"`
+		} `json:"orderable_addons"`
 	} `json:"product"`
 }
 

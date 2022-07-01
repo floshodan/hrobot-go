@@ -54,6 +54,13 @@ type ServerProduct struct {
 			Gross string
 		}
 	}
+	OrderableAddons []struct {
+		ID     string
+		Name   string
+		Min    int
+		Max    int
+		Prices interface{}
+	}
 }
 
 type ServerOrderTransaction struct {

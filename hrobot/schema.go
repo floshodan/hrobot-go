@@ -49,7 +49,6 @@ func ServerProductFromSchema(s schema.ServerProduct) *ServerProduct {
 		Description: s.Product.Description,
 		Traffic:     s.Product.Traffic,
 		Dist:        s.Product.Dist,
-		Arch:        s.Product.Arch,
 		Lang:        s.Product.Lang,
 		Location:    s.Product.Location,
 		Prices: []struct {
@@ -63,6 +62,13 @@ func ServerProductFromSchema(s schema.ServerProduct) *ServerProduct {
 				Gross string
 			}
 		}(s.Product.Prices),
+		OrderableAddons: []struct {
+			ID     string
+			Name   string
+			Min    int
+			Max    int
+			Prices interface{}
+		}(s.Product.OrderableAddons),
 	}
 	return server
 }
