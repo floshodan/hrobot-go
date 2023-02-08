@@ -89,6 +89,7 @@ type ServerOrderTransaction struct {
 		Lang        string
 		Location    string
 	}
+	Addons []interface{}
 }
 
 type ServerMarketTransaction struct {
@@ -372,5 +373,6 @@ type OrderServerOpts struct {
 	Arch     string `url:"arch"`
 	Lang     string `url:"lang"`
 	Comment  string `url:"comment"`
+	Addons   string `url:"addons[]"`
 	Test     bool   `url:"test"`
 }

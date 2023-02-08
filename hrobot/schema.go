@@ -99,6 +99,7 @@ func ServerOrderTransactionFromSchema(s schema.ServerOrderTransaction) *ServerOr
 			Lang        string
 			Location    string
 		}{},
+		Addons: s.Transaction.Addons,
 	}
 	return transaction
 }

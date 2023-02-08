@@ -219,6 +219,7 @@ type ServerOrderTransaction struct {
 			Lang        string   `json:"lang"`
 			Location    string   `json:"location"`
 		} `json:"product"`
+		Addons []interface{} `json:"addons"`
 	} `json:"transaction"`
 }
 
@@ -249,5 +250,6 @@ type ServerOrderTransactionList []struct {
 			Lang        string   `json:"lang"`
 			Location    string   `json:"location"`
 		} `json:"product"`
+		Addons []interface{} `json:"addons"`
 	} `json:"transaction"`
 }
