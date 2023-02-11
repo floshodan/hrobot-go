@@ -149,6 +149,18 @@ func (c *FirewallClient) DeleteFirewallByServerNumber(ctx context.Context, serve
 	return resp, nil
 }
 
+func (c *FirewallClient) GetFirewallByIP(ctx context.Context, ip string) (*Firewall, *Response, error) {
+	return c.GetFirewallByServernumber(ctx, ip)
+}
+
+func (c *FirewallClient) PostFirewallByIP(ctx context.Context, ip string, opt *FirewallOps) (*Firewall, *Response, error) {
+	return c.PostFirewallByServernumber(ctx, ip, &FirewallOps{})
+}
+
+func (c *FirewallClient) DeleteFirewallByIP(ctx context.Context, ip string) (*Response, error) {
+	return c.DeleteFirewallByServerNumber(ctx, ip)
+}
+
 func (c *FirewallClient) GetFirewallTemplate(ctx context.Context) ([]*FirewallTemplate, *Response, error) {
 	req, err := c.client.NewRequest(ctx, "GET", fmt.Sprintf("/firewall/template"), nil)
 
