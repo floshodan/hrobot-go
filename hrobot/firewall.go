@@ -58,7 +58,7 @@ type InputRule struct {
 	DstPort   string `url:"dst_port"`
 	SrcPort   string `url:"src_port"`
 	Protocol  string `url:"protocol"`
-	TCPFlags  string `url:"tcpflags"`
+	TCPFlags  string `url:"tcp_flags"`
 	Action    string `url:"action"`
 }
 
