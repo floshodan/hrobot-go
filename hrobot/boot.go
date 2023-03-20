@@ -14,21 +14,12 @@ type BootClient struct {
 }
 
 type BootList struct {
-	ServerIP      string
-	ServerIpv6Net string
-	ServerNumber  int
-	Os            interface{}
-	Arch          interface{}
-	Active        bool
-	Password      interface{}
-	AuthorizedKey []interface{}
-	HostKey       []interface{}
-	BootTime      interface{}
-	Linux         interface{}
-	Vnc           interface{}
-	Windows       interface{}
-	Plesk         interface{}
-	Cpanel        interface{}
+	Rescue  BootRescue
+	Linux   BootLinux
+	Vnc     BootVnc
+	Windows interface{}
+	Plesk   interface{}
+	Cpanel  interface{}
 }
 
 type BootRescue struct {
@@ -78,6 +69,7 @@ type BootWindows struct {
 	Password      string
 }
 
+// servernumber can also be serverip
 func (c *BootClient) GetBootOptions(ctx context.Context, servernumber string) (*BootList, *Response, error) {
 	req, err := c.client.NewRequest(ctx, "GET", fmt.Sprintf("/boot/%s", servernumber), nil)
 
@@ -110,6 +102,7 @@ func (c *BootClient) GetRescue(ctx context.Context, servernumber string) (*BootR
 	return RescueFromSchema(body), resp, nil
 }
 
+// activate the rescue system
 func (c *BootClient) ActivateRescue(ctx context.Context, servernumber string, opt *RescueOpts) (*BootRescue, *Response, error) {
 	params, _ := query.Values(opt)
 	req, err := c.client.NewRequest(ctx, "POST", fmt.Sprintf("/boot/%s/rescue", servernumber), params)
@@ -187,7 +180,7 @@ func (c *BootClient) ActivateLinux(ctx context.Context, servernumber string, opt
 	var body schema.LinuxList
 	resp, err := c.client.Do(req, &body)
 	if err != nil {
-		return nil, nil, err
+		return nil, resp, err
 	}
 
 	return LinuxFromSchema(body), resp, nil
@@ -327,9 +320,10 @@ func (c *BootClient) DeactivateWindows(ctx context.Context, servernumber string)
 }
 
 type RescueOpts struct {
-	OS             string `url:"os"` //required
-	Arch           string `url:"arch"`
+	OS             string `url:"os"`   //required
+	Arch           string `url:"arch"` // deprecated
 	Authorized_Key string `url:"authorized_key"`
+	Keyboard       string `url:"keyboard"` // default: us
 }
 
 type LinuxOpts struct {

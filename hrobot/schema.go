@@ -2,7 +2,7 @@ package hrobot
 
 import "github.com/floshodan/hrobot-go/hrobot/schema"
 
-//Converts an json Key to SSHKey struct
+// Converts an json Key to SSHKey struct
 func SSHKeyFromSchema(s schema.Key) *SSHKey {
 	sshKey := &SSHKey{
 		Name:        s.Key.Name,
@@ -10,6 +10,7 @@ func SSHKeyFromSchema(s schema.Key) *SSHKey {
 		Type:        s.Key.Type,
 		Size:        s.Key.Size,
 		Data:        s.Key.Data,
+		Created:     s.Key.Created,
 	}
 	return sshKey
 }
@@ -95,10 +96,19 @@ func ServerOrderTransactionFromSchema(s schema.ServerOrderTransaction) *ServerOr
 			Description []string
 			Traffic     string
 			Dist        string
-			Arch        string
+			Arch        int
 			Lang        string
 			Location    string
-		}{},
+		}{
+			ID:          s.Transaction.Product.ID,
+			Name:        s.Transaction.Product.Name,
+			Description: s.Transaction.Product.Description,
+			Traffic:     s.Transaction.Product.Traffic,
+			Dist:        s.Transaction.Product.Dist,
+			Arch:        s.Transaction.Product.Arch,
+			Lang:        s.Transaction.Product.Lang,
+			Location:    s.Transaction.Product.Location,
+		},
 		Addons: s.Transaction.Addons,
 	}
 	return transaction
@@ -336,21 +346,43 @@ func WOLFromSchema(s schema.WOL) *WOL {
 
 func BootListFromSchema(s schema.BootList) *BootList {
 	boot := &BootList{
-		ServerIP:      s.Boot.ServerIP,
-		ServerIpv6Net: s.Boot.ServerIpv6Net,
-		ServerNumber:  s.Boot.ServerNumber,
-		Os:            s.Boot.Os,
-		Arch:          s.Boot.Arch,
-		Active:        s.Boot.Active,
-		Password:      s.Boot.Password,
-		AuthorizedKey: s.Boot.AuthorizedKey,
-		HostKey:       s.Boot.HostKey,
-		BootTime:      s.Boot.BootTime,
-		Linux:         s.Boot.Linux,
-		Vnc:           s.Boot.Vnc,
-		Windows:       s.Boot.Windows,
-		Plesk:         s.Boot.Plesk,
-		Cpanel:        s.Boot.Cpanel,
+		Rescue: BootRescue{
+			ServerIP:      s.Boot.Rescue.ServerIP,
+			ServerIpv6Net: s.Boot.Rescue.ServerIpv6Net,
+			ServerNumber:  s.Boot.Rescue.ServerNumber,
+			Os:            s.Boot.Rescue.Os,
+			Arch:          s.Boot.Rescue.Arch,
+			Active:        s.Boot.Rescue.Active,
+			Password:      s.Boot.Rescue.Password,
+			AuthorizedKey: s.Boot.Rescue.AuthorizedKey,
+			HostKey:       s.Boot.Rescue.HostKey,
+			BootTime:      s.Boot.Rescue.BootTime,
+		},
+		Linux: BootLinux{
+			ServerIP:      s.Boot.Linux.ServerIP,
+			ServerIpv6Net: s.Boot.Linux.ServerIpv6Net,
+			ServerNumber:  s.Boot.Linux.ServerNumber,
+			Dist:          s.Boot.Linux.Dist,
+			Arch:          s.Boot.Linux.Arch,
+			Lang:          s.Boot.Linux.Lang,
+			Active:        s.Boot.Linux.Active,
+			Password:      s.Boot.Linux.Password,
+			AuthorizedKey: s.Boot.Linux.AuthorizedKey,
+			HostKey:       s.Boot.Linux.HostKey,
+		},
+		Vnc: BootVnc{
+			ServerIP:      s.Boot.Vnc.ServerIP,
+			ServerIpv6Net: s.Boot.Vnc.ServerIpv6Net,
+			ServerNumber:  s.Boot.Vnc.ServerNumber,
+			Dist:          s.Boot.Vnc.Dist,
+			Arch:          s.Boot.Vnc.Arch,
+			Lang:          s.Boot.Vnc.Lang,
+			Active:        s.Boot.Vnc.Active,
+			Password:      s.Boot.Vnc.Password,
+		},
+		Windows: s.Boot.Windows,
+		Plesk:   s.Boot.Plesk,
+		Cpanel:  s.Boot.Cpanel,
 	}
 	return boot
 }

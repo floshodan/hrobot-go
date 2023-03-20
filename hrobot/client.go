@@ -151,6 +151,9 @@ func (c *Client) Do(r *http.Request, v interface{}) (*Response, error) {
 		case 404:
 			err = fmt.Errorf("404 Not found")
 			return response, err
+		case 409:
+			err = fmt.Errorf("409 Already in use")
+			return response, err
 		case 503:
 			err = fmt.Errorf("503 - Service Unavailable")
 			return response, err

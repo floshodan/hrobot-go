@@ -7,6 +7,7 @@ type SSHKeys []struct {
 		Type        string `json:"type"`
 		Size        int    `json:"size"`
 		Data        string `json:"data"`
+		Created     string `json:"created_at"`
 	} `json:"key"`
 }
 
@@ -17,6 +18,7 @@ type Key struct {
 		Type        string `json:"type"`
 		Size        int    `json:"size"`
 		Data        string `json:"data"`
+		Created     string `json:"created_at"`
 	} `json:"key"`
 }
 

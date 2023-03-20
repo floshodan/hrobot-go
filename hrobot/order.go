@@ -85,7 +85,7 @@ type ServerOrderTransaction struct {
 		Description []string
 		Traffic     string
 		Dist        string
-		Arch        string
+		Arch        int
 		Lang        string
 		Location    string
 	}

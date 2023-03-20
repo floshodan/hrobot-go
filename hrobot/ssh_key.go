@@ -14,6 +14,7 @@ type SSHKey struct {
 	Type        string
 	Size        int
 	Data        string
+	Created     string
 }
 
 type SSHKeyClient struct {

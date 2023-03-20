@@ -2,7 +2,7 @@ package schema
 
 type BootList struct {
 	Boot struct {
-		Rescue  `json:"rescue"`
+		Rescue  Rescue      `json:"rescue"`
 		Linux   Linux       `json:"linux"`
 		Vnc     Vnc         `json:"vnc"`
 		Windows interface{} `json:"windows"`
