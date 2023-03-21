@@ -459,10 +459,22 @@ func FirewallFromSchema(s schema.Firewall) *Firewall {
 		ServerIP:     s.Firewall.ServerIP,
 		ServerNumber: s.Firewall.ServerNumber,
 		Status:       s.Firewall.Status,
+		Filter_IPv6:  s.Firewall.Filter_IPv6,
 		WhitelistHos: s.Firewall.WhitelistHos,
 		Port:         s.Firewall.Port,
 		Rules: struct {
 			Input []struct {
+				IPVersion string
+				Name      string
+				DstIP     interface{}
+				SrcIP     string
+				DstPort   string
+				SrcPort   interface{}
+				Protocol  interface{}
+				TCPFlags  interface{}
+				Action    string
+			}
+			Output []struct {
 				IPVersion string
 				Name      string
 				DstIP     interface{}
@@ -491,19 +503,34 @@ func FirewallTemplateFromSchema(s schema.FirewallTemplate) *FirewallTemplate {
 func FirewallTemplateWithRulesFromSchema(s schema.FirewallTemplateWithRules) *FirewallTemplateWithRules {
 	firewall := &FirewallTemplateWithRules{
 		ID:           s.FirewallTemplate.ID,
+		Name:         s.FirewallTemplate.Name,
+		Filter_IPv6:  s.FirewallTemplate.Filter_IPv6,
 		WhitelistHos: s.FirewallTemplate.WhitelistHos,
 		IsDefault:    s.FirewallTemplate.IsDefault,
 		Rules: struct {
 			Input []struct {
-				IPVersion string
-				Name      string
-				DstIP     interface{}
-				SrcIP     string
-				DstPort   string
-				SrcPort   interface{}
-				Protocol  interface{}
-				TCPFlags  interface{}
-				Action    string
+				IPVersion    string
+				Name         string
+				DstIP        interface{}
+				SrcIP        string
+				DstPort      string
+				SrcPort      interface{}
+				Protocol     interface{}
+				TCPFlags     interface{}
+				PacketLength interface{}
+				Action       string
+			}
+			Output []struct {
+				IPVersion    string
+				Name         string
+				DstIP        interface{}
+				SrcIP        string
+				DstPort      string
+				SrcPort      interface{}
+				Protocol     interface{}
+				TCPFlags     interface{}
+				PacketLength interface{}
+				Action       string
 			}
 		}(s.FirewallTemplate.Rules),
 	}

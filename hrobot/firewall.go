@@ -17,10 +17,22 @@ type Firewall struct {
 	ServerIP     string
 	ServerNumber int
 	Status       string
+	Filter_IPv6  bool
 	WhitelistHos bool
 	Port         string
 	Rules        struct {
 		Input []struct {
+			IPVersion string
+			Name      string
+			DstIP     interface{}
+			SrcIP     string
+			DstPort   string
+			SrcPort   interface{}
+			Protocol  interface{}
+			TCPFlags  interface{}
+			Action    string
+		}
+		Output []struct {
 			IPVersion string
 			Name      string
 			DstIP     interface{}
@@ -65,25 +77,41 @@ type InputRule struct {
 type FirewallTemplate struct {
 	ID           int
 	Name         string
+	Filter_IPv6  bool
 	WhitelistHos bool
 	IsDefault    bool
 }
 
 type FirewallTemplateWithRules struct {
-	ID           int  `json:"id"`
+	ID           int `json:"id"`
+	Name         string
+	Filter_IPv6  bool
 	WhitelistHos bool `json:"whitelist_hos"`
 	IsDefault    bool `json:"is_default"`
 	Rules        struct {
 		Input []struct {
-			IPVersion string
-			Name      string
-			DstIP     interface{}
-			SrcIP     string
-			DstPort   string
-			SrcPort   interface{}
-			Protocol  interface{}
-			TCPFlags  interface{}
-			Action    string
+			IPVersion    string
+			Name         string
+			DstIP        interface{}
+			SrcIP        string
+			DstPort      string
+			SrcPort      interface{}
+			Protocol     interface{}
+			TCPFlags     interface{}
+			PacketLength interface{}
+			Action       string
+		}
+		Output []struct {
+			IPVersion    string
+			Name         string
+			DstIP        interface{}
+			SrcIP        string
+			DstPort      string
+			SrcPort      interface{}
+			Protocol     interface{}
+			TCPFlags     interface{}
+			PacketLength interface{}
+			Action       string
 		}
 	}
 }
@@ -273,6 +301,7 @@ func (c *FirewallClient) DeleteFirewallTemplateById(ctx context.Context, id stri
 
 type FirewallOps struct {
 	Status        string      `url:"status"`        //change the status of the firewall ('active' or 'disabled')
+	Filter_IPv6   string      `url:"filter_ipv6"`   // activate or deactivate the ipv6 filter ('true' or 'false', optional)
 	Whitelist_hos string      `url:"whitelist_hos"` // change the flag of hetzner services whitelisting (true or false)
 	Rules         []InputRule `url:"-"`
 	Template_id   string      `url:"template_id,omitempty"` // not possible in combination of whitelist_hos and rules
@@ -280,6 +309,7 @@ type FirewallOps struct {
 
 type FirewallTemplateOps struct {
 	Name          string      `url:"name"`          //template name
+	Filter_IPv6   string      `url:"filter_ipv6"`   // activate or deactivate the ipv6 filter ('true' or 'false', optional)
 	Whitelist_hos bool        `url:"whitelist_hos"` // change the flag of hetzner services whitelisting (true or false)
 	Is_Default    bool        `url:"is_default"`
 	Rules         []InputRule `url:"-"`
