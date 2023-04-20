@@ -28,6 +28,13 @@ type VSwitchSingle struct {
 	CloudNetwork []interface{}
 }
 
+type VSwitchServer struct {
+	ServerIP      string
+	ServerIpv6Net string
+	ServerNumber  int
+	Status        string
+}
+
 type VSwitchClient struct {
 	client *Client
 }
@@ -57,9 +64,7 @@ func (c *VSwitchClient) GetVSwitchList(ctx context.Context) ([]*VSwitch, *Respon
 
 func (c *VSwitchClient) AddVSwitch(ctx context.Context, opt *AddvSwitchOps) (*VSwitchSingle, *Response, error) {
 	params, _ := query.Values(opt)
-	fmt.Println(params.Encode())
-	req, err := c.client.NewRequest(ctx, "POST", fmt.Sprintf("/vswitch/"), params)
-
+	req, err := c.client.NewRequest(ctx, "POST", "/vswitch", params)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -182,10 +187,8 @@ func stringToURLValue(value interface{}, key string) url.Values {
 	}
 }
 
+// Vlan_ID has to be in range: 4000 to 4091
 type AddvSwitchOps struct {
 	Name    string `url:"name"`
 	Vlan_ID int    `url:"vlan"`
-}
-
-type VSwitchServer struct {
 }
