@@ -373,6 +373,6 @@ type OrderServerOpts struct {
 	Arch     string `url:"arch"`
 	Lang     string `url:"lang"`
 	Comment  string `url:"comment"`
-	Addons   string `url:"addons[]"`
+	Addons   string `url:"addon[]"`
 	Test     bool   `url:"test"`
 }
