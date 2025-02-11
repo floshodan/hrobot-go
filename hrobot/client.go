@@ -41,6 +41,7 @@ type Client struct {
 	VSwitch    VSwitchClient
 	Failover   FailoverClient
 	RDNS       RDNSClient
+	StoageBox  StorageBoxClient
 }
 
 type ClientOption func(*Client)
@@ -99,6 +100,7 @@ func NewClient(options ...ClientOption) *Client {
 	client.VSwitch = VSwitchClient{client: client}
 	client.Failover = FailoverClient{client: client}
 	client.RDNS = RDNSClient{client: client}
+	client.StoageBox = StorageBoxClient{client: client}
 
 	return client
 }
