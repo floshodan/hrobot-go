@@ -560,6 +560,54 @@ func VSwitchSingleFromSchema(s schema.VSwitchSingle) *VSwitchSingle {
 	return vswitch
 }
 
+func StorageBoxFromSchema(s schema.StorageBox) *StorageBox {
+	storagebox := &StorageBox{
+		ID:           s.StorageBox.ID,
+		Login:        s.StorageBox.Login,
+		Name:         s.StorageBox.Name,
+		Product:      s.StorageBox.Product,
+		Cancelled:    s.StorageBox.Cancelled,
+		Locked:       s.StorageBox.Locked,
+		Location:     s.StorageBox.Location,
+		LinkedServer: s.StorageBox.LinkedServer,
+		PaidUntil:    s.StorageBox.PaidUntil,
+	}
+	return storagebox
+}
+
+func StorageBoxSingleFromSchema(s schema.StorageBoxSingle) *StorageBoxSingle {
+	storagebox := &StorageBoxSingle{
+		ID:                   s.StorageBox.ID,
+		Login:                s.StorageBox.Login,
+		Name:                 s.StorageBox.Name,
+		Product:              s.StorageBox.Product,
+		Cancelled:            s.StorageBox.Cancelled,
+		Locked:               s.StorageBox.Locked,
+		Location:             s.StorageBox.Location,
+		LinkedServer:         s.StorageBox.LinkedServer,
+		PaidUntil:            s.StorageBox.PaidUntil,
+		DiskQuota:            s.StorageBox.DiskQuota,
+		DiskUsage:            s.StorageBox.DiskUsage,
+		DiskUsageData:        s.StorageBox.DiskUsageData,
+		DiskUsageSnapshots:   s.StorageBox.DiskUsageSnapshots,
+		WebDAV:               s.StorageBox.WebDAV,
+		Samba:                s.StorageBox.Samba,
+		SSH:                  s.StorageBox.SSH,
+		ExternalReachability: s.StorageBox.ExternalReachability,
+		ZFS:                  s.StorageBox.ZFS,
+		Server:               s.StorageBox.Server,
+		HostSystem:           s.StorageBox.HostSystem,
+	}
+	return storagebox
+}
+
+func PasswordFromSchema(s schema.Password) *Password {
+	password := &Password{
+		Password: s.Password,
+	}
+	return password
+}
+
 // ErrorFromSchema converts a schema.Error to an Error.
 /*
 func ErrorFromSchema(s schema.Error) Error {
